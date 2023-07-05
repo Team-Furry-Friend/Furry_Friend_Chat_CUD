@@ -1,0 +1,39 @@
+name: Gradle Build Test
+
+on:
+  push:
+    branches-ignore: [ main ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.ACTIONS_TOKEN }}
+          submodules: true
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Run chmod to make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.4.0
+        with:
+          gradle-version: release-candidate
+          cache-disabled: true
+          arguments: build --scan
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-reports
+          path: build/reports/
