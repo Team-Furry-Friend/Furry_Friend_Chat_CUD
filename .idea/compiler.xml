@@ -10,6 +10,5 @@
         <module name="furry_frined_chat_cud.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17" />
   </component>
 </project>
