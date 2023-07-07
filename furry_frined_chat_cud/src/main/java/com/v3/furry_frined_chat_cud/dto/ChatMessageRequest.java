@@ -1,13 +1,13 @@
 package com.v3.furry_frined_chat_cud.dto;
 
-public class Greeting {
+public class ChatMessageRequest {
 
     private String content;
 
-    public Greeting() {
+    public ChatMessageRequest() {
     }
 
-    public Greeting(String content) {
+    public ChatMessageRequest(String content) {
         this.content = content;
     }
 

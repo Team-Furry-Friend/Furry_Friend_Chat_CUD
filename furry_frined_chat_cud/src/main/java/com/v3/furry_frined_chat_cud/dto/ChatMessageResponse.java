@@ -1,13 +1,13 @@
 package com.v3.furry_frined_chat_cud.dto;
 
-public class HelloMessage {
+public class ChatMessageResponse {
 
     private String name;
 
-    public HelloMessage() {
+    public ChatMessageResponse() {
     }
 
-    public HelloMessage(String name) {
+    public ChatMessageResponse(String name) {
         this.name = name;
     }
 
