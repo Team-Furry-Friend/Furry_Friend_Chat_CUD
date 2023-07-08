@@ -26,8 +26,6 @@ public class ChatParticipants extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chat_participants_id;
 
-    private Long chat_room_id;
-
     private String chat_participants_member;
 
     private boolean chat_participants_del;

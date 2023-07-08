@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.v3.furry_frined_chat_cud.common.entity.BaseEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,9 +34,9 @@ public class ChatRoom extends BaseEntity {
 
     private boolean chat_del;
 
-    @OneToMany(mappedBy = "chat_room")
+    @OneToMany(mappedBy = "chatRoom")
     private List<ChatMessage> chatMessages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "chat_room")
+    @OneToMany(mappedBy = "chatRoom")
     private List<ChatParticipants> chatParticipants = new ArrayList<>();
 }
