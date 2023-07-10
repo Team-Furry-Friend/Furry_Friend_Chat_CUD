@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.v3.furry_frined_chat_cud.common.entity.BaseEntity;
+import com.v3.furry_frined_chat_cud.dto.ChatRoomResponseDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,17 +27,36 @@ public class ChatRoom extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long chat_room_id;
+    private Long chatRoomId;
 
-    private String chat_name;
+    private String chatName;
 
-    private Long chat_creator;
+    private Long chatCreator;
 
-    private boolean chat_del;
-
-    @OneToMany(mappedBy = "chatRoom")
-    private List<ChatMessage> chatMessages = new ArrayList<>();
+    private boolean chatDel;
 
     @OneToMany(mappedBy = "chatRoom")
-    private List<ChatParticipants> chatParticipants = new ArrayList<>();
+    private List<ChatMessage> chatMessages;
+
+    @OneToMany(mappedBy = "chatRoom")
+    private List<ChatParticipants> chatParticipants;
+
+    public ChatRoom(String chatName, Long chatCreator, boolean chatDel) {
+        this.chatName = chatName;
+        this.chatCreator = chatCreator;
+        this.chatDel = chatDel;
+    }
+
+    public void setChatDel(boolean chatDel){
+        this.chatDel = chatDel;
+    }
+
+    public ChatRoomResponseDTO entityToDTO() {
+        return ChatRoomResponseDTO.builder()
+            .chatRoomId(this.getChatRoomId())
+            .chatName(this.getChatName())
+            .chatCreator(this.getChatCreator())
+            .chatDel(this.isChatDel())
+            .build();
+    }
 }

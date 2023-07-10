@@ -23,18 +23,18 @@ public class ChatMessage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long chat_message_id;
+    private Long chatMessageId;
 
-    private Long chat_message_sender_id;
-    private String chat_message_serder_name;
+    private Long chatMessageSenderId;
+    private String chatMessageSerderName;
 
-    private String chat_message_content;
+    private String chatMessageContent;
 
-    private boolean chat_message_read;
+    private boolean chatMessageRead;
 
-    private boolean chat_message_del;
+    private boolean chatMessageDel;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_room_id")
+    @JoinColumn(name = "chatRoomId")
     private ChatRoom chatRoom;
 }

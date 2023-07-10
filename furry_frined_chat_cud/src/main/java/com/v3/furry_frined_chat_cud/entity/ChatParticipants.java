@@ -24,13 +24,13 @@ public class ChatParticipants extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long chat_participants_id;
+    private Long chatParticipantsId;
 
-    private String chat_participants_member;
+    private String chatParticipantsMember;
 
-    private boolean chat_participants_del;
+    private boolean chatParticipantsDel;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_room_id")
+    @JoinColumn(name = "chatRoomId")
     private ChatRoom chatRoom;
 }

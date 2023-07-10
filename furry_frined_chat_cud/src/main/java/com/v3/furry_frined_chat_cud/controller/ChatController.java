@@ -3,9 +3,12 @@ package com.v3.furry_frined_chat_cud.controller;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.v3.furry_frined_chat_cud.dto.ChatMessageRequest1;
+import com.v3.furry_frined_chat_cud.common.response.ApiResponse;
+import com.v3.furry_frined_chat_cud.dto.ChatMessageRequest;
 import com.v3.furry_frined_chat_cud.dto.ChatMessageResponse;
 import com.v3.furry_frined_chat_cud.service.ChatMessageService;
 
@@ -21,7 +24,7 @@ public class ChatController {
 
     @MessageMapping("/chats")
     @SendTo("/chats")
-    public ChatMessageResponse chatting(ChatMessageRequest1 chatMessageRequest) {
+    public ChatMessageResponse chatting(ChatMessageRequest chatMessageRequest) {
 
         log.info("{request : {}}", chatMessageRequest.getContent());
 
@@ -30,7 +33,7 @@ public class ChatController {
 
     @MessageMapping("/{chat_room_id}")
     @SendTo("/sub/{chat_room_id}")
-     public ChatMessageResponse chatting(ChatMessageRequest1 chatMessageRequest, @DestinationVariable(value = "chat_room_id") Long chat_room_id) {
+     public ChatMessageResponse chatting(ChatMessageRequest chatMessageRequest, @DestinationVariable(value = "chat_room_id") Long chat_room_id) {
 
         log.info("{roomNo : {}, request : {}}", chat_room_id, chatMessageRequest);
 
