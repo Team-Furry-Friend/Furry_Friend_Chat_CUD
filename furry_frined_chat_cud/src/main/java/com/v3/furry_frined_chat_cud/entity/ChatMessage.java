@@ -52,6 +52,12 @@ public class ChatMessage extends BaseEntity {
     public ChatMessageResponseDTO entityToDTO(ChatMessage chatMessage){
 
         return ChatMessageResponseDTO.builder()
+            .chatMessageId(chatMessage.chatMessageId)
+            .chatMessageContent(chatMessage.chatMessageContent)
+            .chatMessageSenderId(chatMessage.chatMessageSenderId)
+            .chatMessageSerderName(chatMessage.chatMessageSerderName)
+            .chatMessageDel(chatMessage.chatMessageDel)
+            .chatMessageRead(chatMessage.chatMessageRead)
             .build();
     }
 }

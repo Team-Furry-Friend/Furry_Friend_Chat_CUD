@@ -5,9 +5,14 @@ import lombok.Builder;
 @Builder
 public class ChatMessageResponseDTO {
 
-    private String name;
+    private Long chatMessageId;
 
-    public String getName() {
-        return name;
-    }
+    private Long chatMessageSenderId;
+    private String chatMessageSerderName;
+
+    private String chatMessageContent;
+
+    private boolean chatMessageRead;
+
+    private boolean chatMessageDel;
 }
