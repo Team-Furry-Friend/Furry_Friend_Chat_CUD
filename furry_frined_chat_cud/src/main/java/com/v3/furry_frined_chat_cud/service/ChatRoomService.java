@@ -34,10 +34,10 @@ public class ChatRoomService {
 
     // 채팅방 생성
     public void createChatRoom(ChatRoomRequestDTO chatRoomRequestDTO){
-        log.info(chatRoomRequestDTO.getJwtRequest().getAccess_token());
-        try{
-            JwtResponse jwtResponse = tokenService.getMember(chatRoomRequestDTO.getJwtRequest().getAccess_token());
 
+        try{
+
+            JwtResponse jwtResponse = tokenService.getMember(chatRoomRequestDTO.getJwtRequest().getAccess_token());
             if (jwtResponse.getMemberId() == null || jwtResponse.getMemberName() == null){
                 throw new Exception("토큰 오류가 발생했습니다.");
             }
@@ -49,7 +49,7 @@ public class ChatRoomService {
                 .build();
 
             // chatRoom을 저장할 때 참여자 추가 저장
-            chatParticipantsService.createChatParticipants(chatRoom, jwtResponse);
+            chatParticipantsService.createChatParticipants(chatRoom, chatRoomRequestDTO);
         }catch (Exception e){
             log.info("ChatRoomService 에러 발생: " + e.getMessage(), e);
         }
