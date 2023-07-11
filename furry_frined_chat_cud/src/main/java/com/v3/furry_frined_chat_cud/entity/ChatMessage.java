@@ -1,7 +1,9 @@
 package com.v3.furry_frined_chat_cud.entity;
 
 import com.v3.furry_frined_chat_cud.common.entity.BaseEntity;
+import com.v3.furry_frined_chat_cud.dto.ChatMessageResponseDTO;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -34,7 +36,22 @@ public class ChatMessage extends BaseEntity {
 
     private boolean chatMessageDel;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "chatRoomId")
     private ChatRoom chatRoom;
+
+    public ChatMessage(String chatMessageContent, boolean chatMessageDel, boolean chatMessageRead, Long chatMessageSenderId, String chatMessageSerderName, ChatRoom chatRoom){
+        this.chatMessageContent = chatMessageContent;
+        this.chatMessageDel = chatMessageDel;
+        this.chatMessageRead = chatMessageRead;
+        this.chatMessageSenderId = chatMessageSenderId;
+        this.chatMessageSerderName = chatMessageSerderName;
+        this.chatRoom = chatRoom;
+    }
+
+    public ChatMessageResponseDTO entityToDTO(ChatMessage chatMessage){
+
+        return ChatMessageResponseDTO.builder()
+            .build();
+    }
 }

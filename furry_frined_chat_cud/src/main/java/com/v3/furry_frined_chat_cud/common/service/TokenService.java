@@ -1,6 +1,5 @@
 package com.v3.furry_frined_chat_cud.common.service;
 
-import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +10,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.v3.furry_frined_chat_cud.common.dto.JwtResponse;
 
 import lombok.extern.log4j.Log4j2;

@@ -2,6 +2,7 @@ package com.v3.furry_frined_chat_cud.entity;
 
 import com.v3.furry_frined_chat_cud.common.entity.BaseEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,11 +27,24 @@ public class ChatParticipants extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatParticipantsId;
 
-    private String chatParticipantsMember;
+    private Long chatParticipantsMemberId;
+
+    private String chatParticipantsMemberName;
 
     private boolean chatParticipantsDel;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "chatRoomId")
     private ChatRoom chatRoom;
+
+    public ChatParticipants(Long chatParticipantsMemberId, String chatParticipantsMemberName, boolean chatParticipantsDel, ChatRoom chatRoom){
+        this.chatParticipantsMemberId = chatParticipantsMemberId;
+        this.chatParticipantsMemberName = chatParticipantsMemberName;
+        this.chatParticipantsDel = chatParticipantsDel;
+        this.chatRoom = chatRoom;
+    }
+
+    public void setChatParticipantsDel(boolean chatParticipantsDel){
+        this.chatParticipantsDel = chatParticipantsDel;
+    }
 }

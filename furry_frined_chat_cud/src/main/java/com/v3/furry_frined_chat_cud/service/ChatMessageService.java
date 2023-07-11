@@ -1,0 +1,56 @@
+package com.v3.furry_frined_chat_cud.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.v3.furry_frined_chat_cud.common.dto.JwtResponse;
+import com.v3.furry_frined_chat_cud.common.service.TokenService;
+import com.v3.furry_frined_chat_cud.dto.ChatMessageRequestDTO;
+import com.v3.furry_frined_chat_cud.dto.ChatMessageResponseDTO;
+import com.v3.furry_frined_chat_cud.entity.ChatMessage;
+import com.v3.furry_frined_chat_cud.entity.ChatRoom;
+import com.v3.furry_frined_chat_cud.repository.ChatMessageRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+@Service
+@RequiredArgsConstructor
+@Log4j2
+public class ChatMessageService {
+
+    private final ChatMessageRepository chatMessageRepository;
+
+    private final ChatRoomService chatRoomService;
+
+    private final TokenService tokenService;
+
+    // 메시지 저장 메서드
+    public ChatMessageResponseDTO saveChatMessage(final Long chatRoomId, final ChatMessageRequestDTO chatMessageRequestDTO, String accessToken) throws Exception{
+
+        try {
+            
+            JwtResponse jwtResponse = tokenService.getMember(accessToken);
+            ChatRoom chatRoom = chatRoomService.findChatRoom(chatRoomId);
+            
+            // Entity로 변환 후 저장
+            ChatMessage chatMessage = chatMessageRequestDTO.dtoToEntity(chatMessageRequestDTO, jwtResponse, chatRoom);
+            chatMessageRepository.save(chatMessage);
+
+            // DTO로 변환 후 응답
+            return chatMessage.entityToDTO(chatMessage);
+        } catch (Exception e){
+
+            log.error("ChatMessageService 오류 발생: " + e.getMessage(), e);
+            throw new Exception("엑세스 토큰 호출 실패");
+        }
+    }
+
+    // 페이징을 통해 받아오는 채팅 내역
+    // public List<ChatMessage> readChatMessage(final long chat_room_id) {
+    //
+    //     // return chatMessageRepository.findAllCursorPagingBy(chatRoomId, chatIdx, size);
+    //     return null;
+    // }
+}

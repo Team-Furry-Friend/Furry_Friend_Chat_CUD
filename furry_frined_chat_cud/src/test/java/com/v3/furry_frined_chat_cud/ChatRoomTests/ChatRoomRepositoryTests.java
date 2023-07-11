@@ -58,7 +58,7 @@ public class ChatRoomRepositoryTests {
         clear();
 
         // when
-        ChatRoom result = chatRoomRepository.findChatRoomByChatCreator(chatRoom.getChatRoomId());
+        ChatRoom result = chatRoomRepository.findChatRoomByChatRoomId(chatRoom.getChatRoomId());
 
         // then
         assertThat(chatRoom.getChatRoomId()).isEqualTo(result.getChatRoomId());

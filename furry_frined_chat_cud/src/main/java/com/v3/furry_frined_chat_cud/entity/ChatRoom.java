@@ -1,12 +1,11 @@
 package com.v3.furry_frined_chat_cud.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.v3.furry_frined_chat_cud.common.entity.BaseEntity;
 import com.v3.furry_frined_chat_cud.dto.ChatRoomResponseDTO;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
