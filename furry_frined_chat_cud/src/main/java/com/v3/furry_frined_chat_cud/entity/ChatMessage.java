@@ -1,7 +1,9 @@
 package com.v3.furry_frined_chat_cud.entity;
 
 import com.v3.furry_frined_chat_cud.common.entity.BaseEntity;
+import com.v3.furry_frined_chat_cud.dto.ChatMessageResponseDTO;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,18 +25,33 @@ public class ChatMessage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long chat_message_id;
+    private Long chatMessageId;
 
-    private Long chat_message_sender_id;
-    private String chat_message_serder_name;
+    private Long chatMessageSenderId;
+    private String chatMessageSerderName;
 
-    private String chat_message_content;
+    private String chatMessageContent;
 
-    private boolean chat_message_read;
+    private boolean chatMessageRead;
 
-    private boolean chat_message_del;
+    private boolean chatMessageDel;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_room_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "chatRoomId")
     private ChatRoom chatRoom;
+
+    public ChatMessage(String chatMessageContent, boolean chatMessageDel, boolean chatMessageRead, Long chatMessageSenderId, String chatMessageSerderName, ChatRoom chatRoom){
+        this.chatMessageContent = chatMessageContent;
+        this.chatMessageDel = chatMessageDel;
+        this.chatMessageRead = chatMessageRead;
+        this.chatMessageSenderId = chatMessageSenderId;
+        this.chatMessageSerderName = chatMessageSerderName;
+        this.chatRoom = chatRoom;
+    }
+
+    public ChatMessageResponseDTO entityToDTO(ChatMessage chatMessage){
+
+        return ChatMessageResponseDTO.builder()
+            .build();
+    }
 }
