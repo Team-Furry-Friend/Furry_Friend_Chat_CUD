@@ -28,8 +28,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
-            .addEndpoint("/furry-chat")
-            .setAllowedOriginPatterns("*")
+            .addEndpoint("/chats")
+            // .setAllowedOriginPatterns("*")
             .withSockJS();
     }
 }
