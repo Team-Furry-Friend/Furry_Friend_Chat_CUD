@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.v3.furry_frined_chat_cud.common.response.ApiResponse;
+import com.v3.furry_frined_chat_cud.dto.ChatParticipantsResponseDTO;
 import com.v3.furry_frined_chat_cud.dto.ChatRoomRequestDTO;
 import com.v3.furry_frined_chat_cud.service.ChatRoomService;
 
@@ -18,7 +19,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @RequiredArgsConstructor
 @Log4j2
-@RequestMapping("/chatrooms")
+@RequestMapping("/chats")
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
@@ -28,11 +29,11 @@ public class ChatRoomController {
 
     // 채팅방 생성
     @PostMapping("")
-    public ApiResponse startChat(@RequestBody ChatRoomRequestDTO chatRoomRequestDTO){
+    public ApiResponse<ChatParticipantsResponseDTO> startChat(@RequestBody ChatRoomRequestDTO chatRoomRequestDTO){
 
         try {
-            chatRoomService.createChatRoom(chatRoomRequestDTO);
-            return ApiResponse.success("success");
+            ChatParticipantsResponseDTO chatParticipantsResponseDTO = chatRoomService.createChatRoom(chatRoomRequestDTO);
+            return ApiResponse.success("success", chatParticipantsResponseDTO);
         }catch (Exception e){
             log.error("에러 발생: " + e.getMessage(), e);
             return ApiResponse.fail(400, "에러 발생: " + e.getMessage());

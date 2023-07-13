@@ -1,6 +1,7 @@
 package com.v3.furry_frined_chat_cud.entity;
 
 import com.v3.furry_frined_chat_cud.common.entity.BaseEntity;
+import com.v3.furry_frined_chat_cud.dto.ChatParticipantsResponseDTO;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -18,9 +19,9 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 public class ChatParticipants extends BaseEntity {
 
     @Id
@@ -42,6 +43,19 @@ public class ChatParticipants extends BaseEntity {
         this.chatParticipantsMemberName = chatParticipantsMemberName;
         this.chatParticipantsDel = chatParticipantsDel;
         this.chatRoom = chatRoom;
+    }
+
+    public ChatParticipantsResponseDTO entityToDTO(ChatParticipants chatParticipants){
+
+        ChatRoom chatRoom = new ChatRoom();
+
+        return ChatParticipantsResponseDTO.builder()
+            .chatParticipantsId(chatParticipants.getChatParticipantsId())
+            .chatParticipantsMemberId(chatParticipants.getChatParticipantsMemberId())
+            .chatParticipantsMemberName(chatParticipants.getChatParticipantsMemberName())
+            .chatParticipantsDel(chatParticipants.isChatParticipantsDel())
+            .chatRoomResponseDTO(chatRoom.entityToDTO(chatParticipants.getChatRoom()))
+            .build();
     }
 
     public void setChatParticipantsDel(boolean chatParticipantsDel){

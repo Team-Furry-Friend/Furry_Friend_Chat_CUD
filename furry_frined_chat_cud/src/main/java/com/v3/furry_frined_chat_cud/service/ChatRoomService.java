@@ -1,13 +1,16 @@
 package com.v3.furry_frined_chat_cud.service;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.v3.furry_frined_chat_cud.common.dto.JwtResponse;
 import com.v3.furry_frined_chat_cud.common.service.TokenService;
+import com.v3.furry_frined_chat_cud.dto.ChatParticipantsResponseDTO;
 import com.v3.furry_frined_chat_cud.dto.ChatRoomRequestDTO;
 import com.v3.furry_frined_chat_cud.entity.ChatParticipants;
 import com.v3.furry_frined_chat_cud.entity.ChatRoom;
-import com.v3.furry_frined_chat_cud.repository.ChatParticipantsRepository;
 import com.v3.furry_frined_chat_cud.repository.ChatRoomRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -33,7 +36,7 @@ public class ChatRoomService {
     }
 
     // 채팅방 생성
-    public void createChatRoom(ChatRoomRequestDTO chatRoomRequestDTO){
+    public ChatParticipantsResponseDTO createChatRoom(ChatRoomRequestDTO chatRoomRequestDTO) throws Exception{
 
         try{
 
@@ -48,10 +51,11 @@ public class ChatRoomService {
                 .chatName("{" + jwtResponse.getMemberName() + "} 님이 만드신 채팅방")
                 .build();
 
-            // chatRoom을 저장할 때 참여자 추가 저장
-            chatParticipantsService.createChatParticipants(chatRoom, chatRoomRequestDTO);
+            // chatRoom을 저장할 때 참여자 추가 저장 및 리턴
+            return chatParticipantsService.createChatParticipants(chatRoom, chatRoomRequestDTO);
         }catch (Exception e){
-            log.info("ChatRoomService 에러 발생: " + e.getMessage(), e);
+            log.info("ChatRoomService 채팅방 생성 에러 발생: " + e.getMessage(), e);
+            throw new Exception("ChatRoomService 채팅방 생성 에러 발생: " + e.getMessage());
         }
     }
 

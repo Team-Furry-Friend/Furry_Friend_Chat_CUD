@@ -3,6 +3,7 @@ package com.v3.furry_frined_chat_cud.service;
 import org.springframework.stereotype.Service;
 
 import com.v3.furry_frined_chat_cud.common.dto.JwtResponse;
+import com.v3.furry_frined_chat_cud.dto.ChatParticipantsResponseDTO;
 import com.v3.furry_frined_chat_cud.dto.ChatRoomRequestDTO;
 import com.v3.furry_frined_chat_cud.entity.ChatParticipants;
 import com.v3.furry_frined_chat_cud.entity.ChatRoom;
@@ -19,17 +20,23 @@ public class ChatParticipantsService {
 
     private final ChatParticipantsRepository chatParticipantsRepository;
 
-    public void createChatParticipants(ChatRoom chatRoom, ChatRoomRequestDTO chatRoomRequestDTO){
+    public ChatParticipantsResponseDTO createChatParticipants(ChatRoom chatRoom, ChatRoomRequestDTO chatRoomRequestDTO){
 
-        ChatParticipants chatParticipants = ChatParticipants.builder()
-            .chatRoom(chatRoom)
-            .chatParticipantsMemberId(chatRoomRequestDTO.getChatParticipantsId())
-            .chatParticipantsMemberName(chatRoomRequestDTO.getChatParticipantsName())
-            .chatParticipantsDel(false)
-            .chatRoom(chatRoom)
-            .build();
 
-        chatParticipantsRepository.save(chatParticipants);
+        ChatParticipants chatParticipants = chatParticipantsRepository.findChatRoomByChatParticipantsMember(chatRoom.getChatCreator(), chatRoomRequestDTO.getChatParticipantsId());
+
+        if (chatParticipants == null) {
+            chatParticipants = ChatParticipants.builder()
+                .chatRoom(chatRoom)
+                .chatParticipantsMemberId(chatRoomRequestDTO.getChatParticipantsId())
+                .chatParticipantsMemberName(chatRoomRequestDTO.getChatParticipantsName())
+                .chatParticipantsDel(false)
+                .chatRoom(chatRoom)
+                .build();
+            chatParticipantsRepository.save(chatParticipants);
+        }
+
+        return chatParticipants.entityToDTO(chatParticipants);
     }
 
     // 참여자 삭제

@@ -15,4 +15,11 @@ public interface ChatParticipantsRepository extends JpaRepository<ChatParticipan
         + "and c.chatParticipantsMemberId = :memberId")
     ChatParticipants findChatParticipants(Long chatRoomId, Long memberId);
 
+    // 채팅방과 채팅 참여자 조회
+    @Query("select cp from ChatParticipants cp "
+        + "where ((cp.chatParticipantsMemberId = :senderId and cp.chatRoom.chatCreator = :creatorId) "
+        + "or (cp.chatRoom.chatCreator = :senderId and cp.chatParticipantsMemberId = :creatorId)) "
+        + "and (cp.chatRoom.chatDel=false and cp.chatParticipantsDel=false)")
+    ChatParticipants findChatRoomByChatParticipantsMember(Long creatorId, Long senderId);
+
 }
