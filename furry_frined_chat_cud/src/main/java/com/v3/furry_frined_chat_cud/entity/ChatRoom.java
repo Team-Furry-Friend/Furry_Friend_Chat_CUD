@@ -50,12 +50,12 @@ public class ChatRoom extends BaseEntity {
         this.chatDel = chatDel;
     }
 
-    public ChatRoomResponseDTO entityToDTO() {
+    public ChatRoomResponseDTO entityToDTO(ChatRoom chatRoom) {
         return ChatRoomResponseDTO.builder()
-            .chatRoomId(this.getChatRoomId())
-            .chatName(this.getChatName())
-            .chatCreator(this.getChatCreator())
-            .chatDel(this.isChatDel())
+            .chatRoomId(chatRoom.getChatRoomId())
+            .chatName(chatRoom.getChatName())
+            .chatCreator(chatRoom.getChatCreator())
+            .chatDel(chatRoom.isChatDel())
             .build();
     }
 }
