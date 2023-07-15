@@ -1,6 +1,9 @@
 package com.v3.furry_frined_chat_cud.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.v3.furry_frined_chat_cud.common.response.ApiResponse;
 import com.v3.furry_frined_chat_cud.dto.ChatParticipantsResponseDTO;
+import com.v3.furry_frined_chat_cud.dto.ChatRoomMessageResponseDTO;
 import com.v3.furry_frined_chat_cud.dto.ChatRoomRequestDTO;
 import com.v3.furry_frined_chat_cud.service.ChatRoomService;
 
@@ -25,7 +29,17 @@ public class ChatRoomController {
     private final ChatRoomService chatRoomService;
 
     // 채팅방 목록 조회
-    // NoSQL로 처리 R에서 처리
+    @GetMapping("")
+    public ApiResponse<List<ChatRoomMessageResponseDTO>> findChat(@RequestHeader(value = "Authorization") String accessToken){
+
+        try {
+            List<ChatRoomMessageResponseDTO> result = chatRoomService.findMemberChatRoom(accessToken);
+            return ApiResponse.success("success", result);
+        }catch (Exception e){
+            log.info("ChatController 에러 발생: " + e.getMessage(), e);
+            return ApiResponse.fail(400, "ChatController 에러 발생: " + e.getMessage());
+        }
+    }
 
     // 채팅방 생성
     @PostMapping("")
