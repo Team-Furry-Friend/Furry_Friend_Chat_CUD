@@ -1,15 +1,20 @@
 package com.v3.furry_frined_chat_cud.service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.v3.furry_frined_chat_cud.common.dto.JwtResponse;
 import com.v3.furry_frined_chat_cud.common.service.TokenService;
+import com.v3.furry_frined_chat_cud.dto.ChatMessageResponseDTO;
 import com.v3.furry_frined_chat_cud.dto.ChatParticipantsResponseDTO;
+import com.v3.furry_frined_chat_cud.dto.ChatRoomMessageResponseDTO;
 import com.v3.furry_frined_chat_cud.dto.ChatRoomRequestDTO;
-import com.v3.furry_frined_chat_cud.entity.ChatParticipants;
+import com.v3.furry_frined_chat_cud.dto.ChatRoomResponseDTO;
+import com.v3.furry_frined_chat_cud.entity.ChatMessage;
 import com.v3.furry_frined_chat_cud.entity.ChatRoom;
 import com.v3.furry_frined_chat_cud.repository.ChatRoomRepository;
 
@@ -24,6 +29,35 @@ public class ChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatParticipantsService chatParticipantsService;
     private final TokenService tokenService;
+
+    // 한 유저의 모든 채팅방 조회
+    public List<ChatRoomMessageResponseDTO> findMemberChatRoom(String accessToken) throws Exception{
+
+        try{
+            JwtResponse jwtResponse = tokenService.getMember(accessToken);
+
+            // Pageable pageable = PageRequest.of(0, 1);
+            List<Object []> result = chatRoomRepository.findChatRoomByMember(jwtResponse.getMemberId());
+
+            ChatRoom chatRoom = new ChatRoom();
+            ChatMessage chatMessage = new ChatMessage();
+            List<ChatRoomMessageResponseDTO> chatRoomMessageResponseDTOList = new ArrayList<>();
+
+            result.forEach(arr -> {
+
+                ChatRoomMessageResponseDTO chatRoomMessageResponseDTO = ChatRoomMessageResponseDTO.builder()
+                    .chatMessageResponseDTO(chatMessage.entityToDTO((ChatMessage) arr[1]))
+                    .chatRoomResponseDTO(chatRoom.entityToDTO((ChatRoom) arr[0]))
+                    .build();
+                chatRoomMessageResponseDTOList.add(chatRoomMessageResponseDTO);
+            });
+
+            return chatRoomMessageResponseDTOList;
+        }catch (Exception e){
+            log.error("ChatRoomService 한 유저의 모든 채팅방 조회 실패: " + e.getMessage(), e);
+            throw new Exception("ChatRoomService 한 유저의 모든 채팅방 조회 실패: " + e.getMessage());
+        }
+    }
 
     // 채팅방 조회
     public ChatRoom findChatRoom(Long chatRoomId) throws Exception{

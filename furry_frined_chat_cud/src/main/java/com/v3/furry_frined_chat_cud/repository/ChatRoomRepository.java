@@ -1,5 +1,8 @@
 package com.v3.furry_frined_chat_cud.repository;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,6 +18,16 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
         + "where cr.chatRoomId = :chatRoomId "
         + "group by cr")
     ChatRoom findChatRoomByChatRoomId(Long chatRoomId);
+    
+    // 유저의 가능한 모든 채팅방 조회
+    @Query("select cr, cm from ChatRoom cr left join ChatParticipants cp on cr.chatRoomId = cp.chatRoom.chatRoomId left join ChatMessage cm on cr.chatRoomId = cm.chatRoom.chatRoomId "
+        + "where (cp.chatParticipantsMemberId = :memberId or cr.chatCreator = :memberId) "
+        + "and cr.chatDel=false "
+        + "group by cr "
+        + "having count(cm) > 0 "
+        + "order by cm.regDate")
+    List<Object []> findChatRoomByMember(Long memberId);
+
 
 
 
