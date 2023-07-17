@@ -36,12 +36,12 @@ jobs:
       
       # 실행 권한 부여
       - name: Grant execute permission to gradlew
-        run: chmod +x furry_friend_chat_cud/gradlew
+        run: chmod +x furry_frined_chat_cud/gradlew
 
       # gradle build
       - name: Build with Gradle
         run: |
-          cd furry_friend_chat_cud
+          cd furry_frined_chat_cud
           ./gradlew build -x test
 
       # docker build & push to production
