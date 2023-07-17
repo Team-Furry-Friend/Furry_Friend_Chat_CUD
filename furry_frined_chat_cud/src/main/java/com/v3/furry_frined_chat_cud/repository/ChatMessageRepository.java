@@ -12,6 +12,7 @@ import com.v3.furry_frined_chat_cud.entity.ChatMessage;
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
 
     // 페이징을 통해 채팅 내역을 가져옴.
-    @Query("select cm from ChatMessage cm where cm.chatRoom.chatRoomId = :chatRoomId and cm.chatMessageDel = false")
-    Page<Object []> getChatMessage(Pageable pageable, Long chatRoomId);
+    @Query("select cm from ChatMessage cm "
+        + "where cm.chatRoom.chatRoomId = :chatRoomId and cm.chatMessageDel = false ")
+    Page<ChatMessage> getChatMessage(Pageable pageable, Long chatRoomId);
 }

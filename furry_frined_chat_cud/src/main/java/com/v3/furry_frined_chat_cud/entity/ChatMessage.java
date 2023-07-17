@@ -3,7 +3,6 @@ package com.v3.furry_frined_chat_cud.entity;
 import com.v3.furry_frined_chat_cud.common.entity.BaseEntity;
 import com.v3.furry_frined_chat_cud.dto.ChatMessageResponseDTO;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +35,7 @@ public class ChatMessage extends BaseEntity {
 
     private boolean chatMessageDel;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatRoomId")
     private ChatRoom chatRoom;
 
@@ -52,12 +51,14 @@ public class ChatMessage extends BaseEntity {
     public ChatMessageResponseDTO entityToDTO(ChatMessage chatMessage){
 
         return ChatMessageResponseDTO.builder()
-            .chatMessageId(chatMessage.chatMessageId)
-            .chatMessageContent(chatMessage.chatMessageContent)
-            .chatMessageSenderId(chatMessage.chatMessageSenderId)
-            .chatMessageSerderName(chatMessage.chatMessageSerderName)
-            .chatMessageDel(chatMessage.chatMessageDel)
-            .chatMessageRead(chatMessage.chatMessageRead)
+            .chatMessageId(chatMessage.getChatMessageId())
+            .chatMessageContent(chatMessage.getChatMessageContent())
+            .chatMessageSenderId(chatMessage.getChatMessageSenderId())
+            .chatMessageSerderName(chatMessage.getChatMessageSerderName())
+            .chatMessageDel(chatMessage.isChatMessageDel())
+            .chatMessageRead(chatMessage.isChatMessageRead())
+            .regDate(chatMessage.getRegDate())
+            .modDate(chatMessage.getModDate())
             .build();
     }
 }

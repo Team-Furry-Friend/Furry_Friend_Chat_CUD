@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class ChatRoomMessageResponseDTO {
 
-    private ChatRoomResponseDTO chatRoomResponseDTO;
     private ChatMessageResponseDTO chatMessageResponseDTO;
+    private ChatParticipantsResponseDTO chatParticipantsResponseDTO;
 }
