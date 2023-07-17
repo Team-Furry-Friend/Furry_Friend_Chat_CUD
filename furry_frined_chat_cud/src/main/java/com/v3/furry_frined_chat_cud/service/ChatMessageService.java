@@ -48,34 +48,30 @@ public class ChatMessageService {
         } catch (Exception e){
 
             log.error("ChatMessageService 오류 발생: " + e.getMessage(), e);
-            throw new Exception("엑세스 토큰 호출 실패");
+            throw new Exception("ChatMessageService 오류 발생: " + e.getMessage());
         }
     }
 
     // 페이징을 통해 받아오는 채팅 내역
-    public PageResponseDTO<ChatMessageResponseDTO, Object []> readChatMessage(final PageRequestDTO pageRequestDTO, final Long chatRoomId, final String accessToken) throws Exception {
+    public PageResponseDTO<ChatMessageResponseDTO> readChatMessage(PageRequestDTO pageRequestDTO, final Long chatRoomId, final String accessToken) throws Exception {
 
         try {
             JwtResponse jwtResponse = tokenService.getMember(accessToken);
-            Pageable pageable = pageRequestDTO.getPageable(Sort.by("mod_date").descending());
-            Page<Object []> result = chatMessageRepository.getChatMessage(pageable, chatRoomId);
+            Pageable pageable = pageRequestDTO.getPageable(Sort.by("chatMessageId").descending());
+            Page<ChatMessage> result = chatMessageRepository.getChatMessage(pageable, chatRoomId);
 
-            Function<Object [], ChatMessageResponseDTO> function = (arr -> {
-
-                ChatMessage chatMessage = (ChatMessage) arr[0];
-
+            Function<ChatMessage, ChatMessageResponseDTO> function = (chatMessage -> {
                 if (chatMessage != null){
 
                     // 요청하는 사용자가 채팅 내역과 관련이 있을 때
-                    if (jwtResponse.getMemberId().equals(chatMessage.getChatMessageSenderId()) || jwtResponse.getMemberId().equals(chatMessage.getChatRoom().getChatCreator())){
+                    if (jwtResponse.getMemberId().equals(chatMessage.getChatRoom().getChatParticipants().get(0).getChatParticipantsMemberId()) || jwtResponse.getMemberId().equals(chatMessage.getChatRoom().getChatCreator())){
                         return chatMessage.entityToDTO(chatMessage);
                     }
                 }
-
                 throw new NullPointerException("메시지가 존재하지 않습니다.");
             });
 
-            return new PageResponseDTO<>(result, function);
+            return new PageResponseDTO<>(result.map(function));
         }catch (Exception e){
             log.error("ChatMessageService 채팅 내역 조회 오류 발생: " + e.getMessage(), e);
             throw new Exception("ChatMessageService 채팅 내역 조회 오류 발생: " + e.getMessage());

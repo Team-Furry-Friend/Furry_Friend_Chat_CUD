@@ -11,7 +11,7 @@ import org.springframework.data.domain.Pageable;
 import lombok.Data;
 
 @Data
-public class PageResponseDTO<DTO, EN> {
+public class PageResponseDTO<DTO> {
     private List<DTO> dtoList;
     private int totalPage;
     private int page;
@@ -20,8 +20,8 @@ public class PageResponseDTO<DTO, EN> {
     private boolean prev, next;
     private List<Integer> pageList;
 
-    public PageResponseDTO(Page<EN> result, Function<EN, DTO> fn){
-        dtoList = result.stream().map(fn).collect(Collectors.toList());
+    public PageResponseDTO(Page<DTO> result){
+        dtoList = result.getContent();
         totalPage = result.getTotalPages();
         makePageList(result.getPageable());
     }
@@ -33,7 +33,7 @@ public class PageResponseDTO<DTO, EN> {
         int tempEnt = (int)(Math.ceil(page / 10.0)) * 10;
         start = tempEnt-9;
         prev = start > 1;
-        end = totalPage > tempEnt ? tempEnt : totalPage;
+        end = Math.min(totalPage, tempEnt);
         next = totalPage > tempEnt;
         pageList = IntStream.rangeClosed(start, end)
                 .boxed().collect(Collectors.toList());

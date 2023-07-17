@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.v3.furry_frined_chat_cud.entity.ChatMessage;
 import com.v3.furry_frined_chat_cud.entity.ChatRoom;
 import com.v3.furry_frined_chat_cud.repository.ChatMessageRepository;
+import com.v3.furry_frined_chat_cud.repository.ChatRoomRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -21,6 +22,9 @@ public class ChatMessageServiceTests {
 
     @Autowired
     ChatMessageRepository chatMessageRepository;
+
+    @Autowired
+    ChatRoomRepository chatRoomRepository;
 
     @PersistenceContext
     EntityManager em;
@@ -33,8 +37,8 @@ public class ChatMessageServiceTests {
     private ChatRoom createChatRoom() {
         return new ChatRoom("chat_name", 1L, false);
     }
-    private ChatMessage createChatMessage(){
-        return new ChatMessage("Hi!", false, false, 1L, "soo", createChatRoom());
+    private ChatMessage createChatMessage(ChatRoom chatRoom){
+        return new ChatMessage("Hi!", false, false, 1L, "soo", chatRoom);
     }
 
     @Test
@@ -42,7 +46,10 @@ public class ChatMessageServiceTests {
     void createMessageTest() throws Exception{
 
         // given
-        ChatMessage chatMessage = createChatMessage();
+        ChatRoom chatRoom = createChatRoom();
+        chatRoomRepository.save(chatRoom);
+        clear();
+        ChatMessage chatMessage = createChatMessage(chatRoom);
 
         // when
         chatMessageRepository.save(chatMessage);

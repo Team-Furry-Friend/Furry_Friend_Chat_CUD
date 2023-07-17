@@ -23,7 +23,7 @@ public class PageRequestDTO {
 
     public PageRequestDTO() {
         page=1;
-        size=10;
+        size=20;
         type=null;
         keyword=null;
     }

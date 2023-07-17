@@ -6,8 +6,6 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-import com.v3.furry_frined_chat_cud.handler.WebSocketExceptionHandler;
-
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -15,21 +13,17 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-
-    //둘 다 아래에서 exception handler 에 필요함
-    private final WebSocketExceptionHandler webSocketExceptionHandler;
-
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.setApplicationDestinationPrefixes("/pub");
-        config.enableSimpleBroker("/sub");
+        config.setApplicationDestinationPrefixes("/pub");    // 메세지 받기
+        config.enableSimpleBroker("/sub");  // 메세지 보내기
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
             .addEndpoint("/chats/furry")
-            // .setAllowedOriginPatterns("*")
+            .setAllowedOriginPatterns("*")
             .withSockJS();
     }
 }
