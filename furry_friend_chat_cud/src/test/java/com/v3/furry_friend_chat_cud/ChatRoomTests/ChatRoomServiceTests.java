@@ -29,7 +29,7 @@ public class ChatRoomServiceTests {
     }
 
     private ChatRoom createChatRoom() {
-        return new ChatRoom("{soo} 님이 만드신 채팅방", 1L, false);
+        return new ChatRoom("{soo} 님이 만드신 채팅방", 1L, "박용수", false);
     }
 
     @Test

@@ -23,7 +23,7 @@ public class ChatParticipantsService {
     public ChatParticipantsResponseDTO createChatParticipants(ChatRoom chatRoom, ChatRoomRequestDTO chatRoomRequestDTO){
 
 
-        ChatParticipants chatParticipants = chatParticipantsRepository.findChatRoomByChatParticipantsMember(chatRoom.getChatCreator(), chatRoomRequestDTO.getChatParticipantsId());
+        ChatParticipants chatParticipants = chatParticipantsRepository.findChatRoomByChatParticipantsMember(chatRoom.getChatCreatorId(), chatRoomRequestDTO.getChatParticipantsId());
 
         if (chatParticipants == null) {
             chatParticipants = ChatParticipants.builder()
