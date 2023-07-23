@@ -1,5 +1,7 @@
 package com.v3.furry_friend_chat_cud.common.dto;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
