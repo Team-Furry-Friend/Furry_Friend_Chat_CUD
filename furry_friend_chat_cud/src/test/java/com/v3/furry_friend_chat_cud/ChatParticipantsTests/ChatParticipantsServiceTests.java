@@ -32,7 +32,7 @@ public class ChatParticipantsServiceTests {
     }
 
     private ChatRoom createChatRoom() {
-        return new ChatRoom("chat_name", 1L, false);
+        return new ChatRoom("chat_name", 1L, "박용수", false);
     }
     private ChatParticipants createChatParticipants() {
         return new ChatParticipants(0L, "soo", false, createChatRoom());

@@ -15,7 +15,8 @@ public class ChatRoomResponseDTO {
 
     private String chatName;
 
-    private Long chatCreator;
+    private Long chatCreatorId;
+    private String chatCreatorName;
 
     private boolean chatDel;
 }

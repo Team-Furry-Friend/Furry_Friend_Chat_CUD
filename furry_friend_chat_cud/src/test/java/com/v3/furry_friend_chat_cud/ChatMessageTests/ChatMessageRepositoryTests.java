@@ -35,7 +35,7 @@ public class ChatMessageRepositoryTests {
     }
 
     private ChatRoom createChatRoom() {
-        return new ChatRoom("chat_name", 1L, false);
+        return new ChatRoom("chat_name", 1L, "박용수", false);
     }
     private ChatMessage createChatMessage(ChatRoom chatRoom){
         return new ChatMessage("Hi!", false, false, 1L, "soo", chatRoom);

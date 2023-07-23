@@ -64,7 +64,7 @@ public class ChatMessageService {
                 if (chatMessage != null){
 
                     // 요청하는 사용자가 채팅 내역과 관련이 있을 때
-                    if (jwtResponse.getMemberId().equals(chatMessage.getChatRoom().getChatParticipants().get(0).getChatParticipantsMemberId()) || jwtResponse.getMemberId().equals(chatMessage.getChatRoom().getChatCreator())){
+                    if (jwtResponse.getMemberId().equals(chatMessage.getChatRoom().getChatParticipants().get(0).getChatParticipantsMemberId()) || jwtResponse.getMemberId().equals(chatMessage.getChatRoom().getChatCreatorId())){
                         return chatMessage.entityToDTO(chatMessage);
                     }
                 }

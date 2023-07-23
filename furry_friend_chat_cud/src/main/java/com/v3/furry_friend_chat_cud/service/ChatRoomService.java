@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.v3.furry_friend_chat_cud.common.dto.JwtResponse;
 import com.v3.furry_friend_chat_cud.common.service.TokenService;
+import com.v3.furry_friend_chat_cud.dto.ChatMessageResponseDTO;
 import com.v3.furry_friend_chat_cud.dto.ChatParticipantsResponseDTO;
 import com.v3.furry_friend_chat_cud.dto.ChatRoomMessageResponseDTO;
 import com.v3.furry_friend_chat_cud.dto.ChatRoomRequestDTO;
@@ -42,7 +43,7 @@ public class ChatRoomService {
             result.forEach(arr -> {
 
                 ChatRoomMessageResponseDTO chatRoomMessageResponseDTO = ChatRoomMessageResponseDTO.builder()
-                    .chatMessageResponseDTO(chatMessage.entityToDTO((ChatMessage) arr[0]))
+                    .chatMessageResponseDTO(arr[0] != null ? chatMessage.entityToDTO((ChatMessage) arr[0]) : new ChatMessageResponseDTO())
                     .chatParticipantsResponseDTO(chatParticipants.entityToDTO((ChatParticipants) arr[1]))
                     .build();
                 chatRoomMessageResponseDTOList.add(chatRoomMessageResponseDTO);
@@ -76,7 +77,8 @@ public class ChatRoomService {
             }
 
             ChatRoom chatRoom = ChatRoom.builder()
-                .chatCreator(jwtResponse.getMemberId())
+                .chatCreatorId(jwtResponse.getMemberId())
+                .chatCreatorName(jwtResponse.getMemberName())
                 .chatDel(false)
                 .chatName("{" + jwtResponse.getMemberName() + "} 님이 만드신 채팅방")
                 .build();
@@ -99,7 +101,7 @@ public class ChatRoomService {
             Long memberId = jwtResponse.getMemberId();
 
             // 채팅방 참여자 중 생성자가 방을 나갔을 때
-            if (chatRoom.getChatCreator().equals(memberId)){
+            if (chatRoom.getChatCreatorId().equals(memberId)){
                 chatRoom.setChatDel(true);
                 chatRoomRepository.save(chatRoom);
             // 채팅방 참여자가 1명.

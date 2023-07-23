@@ -29,7 +29,8 @@ public class ChatRoom extends BaseEntity {
 
     private String chatName;
 
-    private Long chatCreator;
+    private Long chatCreatorId;
+    private String chatCreatorName;
 
     private boolean chatDel;
 
@@ -39,9 +40,10 @@ public class ChatRoom extends BaseEntity {
     @OneToMany(mappedBy = "chatRoom")
     private List<ChatParticipants> chatParticipants;
 
-    public ChatRoom(String chatName, Long chatCreator, boolean chatDel) {
+    public ChatRoom(String chatName, Long chatCreatorId, String chatCreatorName, boolean chatDel) {
         this.chatName = chatName;
-        this.chatCreator = chatCreator;
+        this.chatCreatorId = chatCreatorId;
+        this.chatCreatorName = chatCreatorName;
         this.chatDel = chatDel;
     }
 
@@ -53,7 +55,8 @@ public class ChatRoom extends BaseEntity {
         return ChatRoomResponseDTO.builder()
             .chatRoomId(chatRoom.getChatRoomId())
             .chatName(chatRoom.getChatName())
-            .chatCreator(chatRoom.getChatCreator())
+            .chatCreatorId(chatRoom.getChatCreatorId())
+            .chatCreatorName(chatRoom.getChatCreatorName())
             .chatDel(chatRoom.isChatDel())
             .build();
     }
