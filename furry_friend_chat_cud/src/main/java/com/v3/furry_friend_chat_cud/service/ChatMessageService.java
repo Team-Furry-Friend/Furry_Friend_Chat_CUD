@@ -1,5 +1,6 @@
 package com.v3.furry_friend_chat_cud.service;
 
+import java.time.LocalDateTime;
 import java.util.function.Function;
 
 import org.springframework.data.domain.Page;
@@ -53,12 +54,12 @@ public class ChatMessageService {
     }
 
     // 페이징을 통해 받아오는 채팅 내역
-    public PageResponseDTO<ChatMessageResponseDTO> readChatMessage(PageRequestDTO pageRequestDTO, final Long chatRoomId, final String accessToken) throws Exception {
+    public PageResponseDTO<ChatMessageResponseDTO> readChatMessage(PageRequestDTO pageRequestDTO, final Long chatRoomId, final String accessToken, final LocalDateTime time) throws Exception {
 
         try {
             JwtResponse jwtResponse = tokenService.getMember(accessToken);
             Pageable pageable = pageRequestDTO.getPageable(Sort.by("chatMessageId").descending());
-            Page<ChatMessage> result = chatMessageRepository.getChatMessage(pageable, chatRoomId);
+            Page<ChatMessage> result = chatMessageRepository.getChatMessage(pageable, chatRoomId, time);
 
             Function<ChatMessage, ChatMessageResponseDTO> function = (chatMessage -> {
                 if (chatMessage != null){
