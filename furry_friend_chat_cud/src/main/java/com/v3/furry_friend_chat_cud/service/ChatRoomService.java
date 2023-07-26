@@ -45,6 +45,7 @@ public class ChatRoomService {
                 ChatRoomMessageResponseDTO chatRoomMessageResponseDTO = ChatRoomMessageResponseDTO.builder()
                     .chatMessageResponseDTO(arr[0] != null ? chatMessage.entityToDTO((ChatMessage) arr[0]) : new ChatMessageResponseDTO())
                     .chatParticipantsResponseDTO(chatParticipants.entityToDTO((ChatParticipants) arr[1]))
+                    .notReadCount((Long) arr[2])
                     .build();
                 chatRoomMessageResponseDTOList.add(chatRoomMessageResponseDTO);
             });

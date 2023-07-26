@@ -13,4 +13,5 @@ public class ChatRoomMessageResponseDTO {
 
     private ChatMessageResponseDTO chatMessageResponseDTO;
     private ChatParticipantsResponseDTO chatParticipantsResponseDTO;
+    private Long notReadCount;
 }

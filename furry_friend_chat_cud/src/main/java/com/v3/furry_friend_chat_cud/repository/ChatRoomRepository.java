@@ -18,9 +18,9 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     ChatRoom findChatRoomByChatRoomId(Long chatRoomId);
     
     // 유저의 가능한 모든 채팅방 조회
-    @Query("select cm, cp from ChatRoom cr left join ChatParticipants cp on cr.chatRoomId = cp.chatRoom.chatRoomId left join ChatMessage cm on cr.chatRoomId = cm.chatRoom.chatRoomId "
+    @Query("select cm, cp, count(cm) from ChatRoom cr left join ChatParticipants cp on cr.chatRoomId = cp.chatRoom.chatRoomId left join ChatMessage cm on cr.chatRoomId = cm.chatRoom.chatRoomId "
         + "where (cp.chatParticipantsMemberId = :memberId or cr.chatCreatorId = :memberId) "
-        + "and cr.chatDel=false "
+        + "and cr.chatDel=false and cm.chatMessageRead=false and cm.chatMessageSenderId <> :memberId "
         + "group by cr "
         + "order by cm.regDate")
     List<Object []> findChatRoomByMember(Long memberId);
