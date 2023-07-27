@@ -1,6 +1,7 @@
 package com.v3.furry_friend_chat_cud.repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +19,8 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
         + "where cm.chatRoom.chatRoomId = :chatRoomId and cm.chatMessageDel = false "
         + "and cm.regDate <= :time")
     Page<ChatMessage> getChatMessage(Pageable pageable, Long chatRoomId, LocalDateTime time);
+
+    @Query("select cm from ChatMessage cm "
+        + "where cm.chatMessageId in :chatMessageIdList")
+    List<ChatMessage> checkMessage(List<Long> chatMessageIdList);
 }
