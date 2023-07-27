@@ -1,6 +1,7 @@
 package com.v3.furry_friend_chat_cud.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.function.Function;
 
 import org.springframework.data.domain.Page;
@@ -77,5 +78,26 @@ public class ChatMessageService {
             log.error("ChatMessageService 채팅 내역 조회 오류 발생: " + e.getMessage(), e);
             throw new Exception("ChatMessageService 채팅 내역 조회 오류 발생: " + e.getMessage());
         }
+    }
+
+    // 읽음 처리
+    public void checkRead(List<Long> messageId) throws Exception{
+
+        try {
+            // 모든 메시지 불러오기
+            List<ChatMessage> chatMessageList = chatMessageRepository.checkMessage(messageId);
+
+            // 모든 메시지 읽음 처리
+            chatMessageList.forEach(arr->{
+
+                arr.setChatMessageRead(true);
+            });
+
+            chatMessageRepository.saveAll(chatMessageList);
+        }catch (Exception e){
+
+            throw new Exception("오류 발생: " + e.getMessage(), e);
+        }
+
     }
 }

@@ -48,6 +48,10 @@ public class ChatMessage extends BaseEntity {
         this.chatRoom = chatRoom;
     }
 
+    public void setChatMessageRead(boolean chatMessageRead){
+        this.chatMessageRead = chatMessageRead;
+    }
+
     public ChatMessageResponseDTO entityToDTO(ChatMessage chatMessage){
 
         return ChatMessageResponseDTO.builder()
