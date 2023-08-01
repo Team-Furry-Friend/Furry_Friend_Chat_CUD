@@ -18,8 +18,9 @@ jobs:
       # JDK setting - github actions에서 사용할 JDK 설정 (프로젝트나 AWS의 java 버전과 달라도 무방)
       - uses: actions/checkout@v3
         with:
-          submodules: 'recursive'
-      
+          submodules: 'recursive' # 서브모듈을 함께 체크아웃
+
+      # Set up JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -46,6 +47,18 @@ jobs:
         run: |
           cd furry_friend_chat_cud
           ./gradlew clean build -x test
+
+      # Initialize submodule
+      - name: Initialize submodule
+        run: |
+          cd furry_friend_chat_cud
+          git submodule update --init
+
+      # Update submodule to latest commit
+      - name: Update submodule to latest commit
+        run: |
+          cd furry_friend_chat_cud
+          git submodule update --remote --merge
 
       # docker build & push to production
       - name: Docker build & push to prod
