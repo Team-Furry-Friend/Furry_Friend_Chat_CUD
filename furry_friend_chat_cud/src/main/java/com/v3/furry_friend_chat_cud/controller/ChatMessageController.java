@@ -62,14 +62,12 @@ public class ChatMessageController {
             chatMessageService.checkRead(request.getMessageId());
 
             // 해당 채팅방을 구독 중인 다른 사용자들에게 메시지를 읽었다는 알림을 보냅니다.
-            messagingTemplate.convertAndSend("/sub/chats/" + chatRoomId, "success: " + request.getMessageId());
+            messagingTemplate.convertAndSend("/sub/chats/read/" + chatRoomId, request.getMessageId());
         }catch (Exception e){
 
             log.error("오류 발생: " + e.getMessage(), e);
-            messagingTemplate.convertAndSend("/sub/chats/" + chatRoomId, "오류 발생: " + e.getMessage());
+            messagingTemplate.convertAndSend("/sub/chats/read/" + chatRoomId, "오류 발생: " + e.getMessage());
         }
-
-
     }
 
     // 채팅방 메시지 조회
