@@ -4,5 +4,6 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/furry_friend_chat_cud/src/main/resources/Furry-Friend-Chat-Security" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/furry_frined_chat_cud/src/main/resources/Furry-Friend-Chat-Security" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/main/resources/Furry-Friend-Chat-Security" vcs="Git" />
   </component>
 </project>

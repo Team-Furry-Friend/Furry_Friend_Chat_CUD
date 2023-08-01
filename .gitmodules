@@ -1,0 +1,3 @@
+[submodule "src/main/resources/Furry-Friend-Chat-Security"]
+	path = src/main/resources/Furry-Friend-Chat-Security
+	url = https://github.com/Team-Furry-Friend/Furry-Friend-Chat-Security.git
