@@ -1,3 +1,3 @@
-[submodule "furry_friend_chat_cud/src/main/resources/Furry-Friend-Chat-Security"]
-	path = furry_friend_chat_cud/src/main/resources/Furry-Friend-Chat-Security
+[submodule "src/main/resources/Furry-Friend-Chat-Security"]
+	path = src/main/resources/Furry-Friend-Chat-Security
 	url = https://github.com/Team-Furry-Friend/Furry-Friend-Chat-Security.git
