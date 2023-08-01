@@ -1,0 +1,40 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: chat-service
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: furry_friend_chat
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/furry_friend_chat
+    username: root
+    password: 4015pskc
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+logging:
+  level:
+    org:
+      hibernate.type.descriptor.sql: trace
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
+
+token:
+  isvalid:
+    https://howstheairtoday.site/gateway/isvalid
