@@ -40,31 +40,17 @@ jobs:
       
       # 실행 권한 부여
       - name: Grant execute permission to gradlew
-        run: chmod +x furry_friend_chat_cud/gradlew
+        run: chmod +x ./gradlew
 
       # gradle build
       - name: Build with Gradle
         run: |
-          cd furry_friend_chat_cud
           ./gradlew clean build -x test
-
-      # Initialize submodule
-      - name: Initialize submodule
-        run: |
-          cd furry_friend_chat_cud
-          git submodule update --init
-
-      # Update submodule to latest commit
-      - name: Update submodule to latest commit
-        run: |
-          cd furry_friend_chat_cud
-          git submodule update --remote --merge
 
       # docker build & push to production
       - name: Docker build & push to prod
         if: contains(github.ref, 'main')
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          cd furry_friend_chat_cud
           docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/furry-friend-chat-cud .
           docker push ${{ secrets.DOCKER_USERNAME }}/furry-friend-chat-cud
