@@ -10,16 +10,19 @@ on:
 permissions:
   contents: read
 
+env:
+  GITHUB_TOKEN: ${{secrets.ACTIONS_TOKEN_SUBMODULE}}
+
 jobs:
   CI-CD:
     runs-on: ubuntu-latest
     steps:
 
-      # JDK setting - github actions에서 사용할 JDK 설정 (프로젝트나 AWS의 java 버전과 달라도 무방)
-      - uses: actions/checkout@v3
-
-      - name: Initialize submodules
-        run: git submodule update --init --recursive
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ env.GITHUB_TOKEN }}
+          submodules: true
       
       # Set up JDK 17
       - name: Set up JDK 17
